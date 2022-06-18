@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>state简写</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel" >
+		//1.创建类式组件
+		class Weather extends React.Component {
+
+			// 初始化状态。 给Weather的实例对象加属性
+			state = {isHot:true,wind:'微风'}
+
+			// onClick={this.changeWeather}: 把 changeWeather 方法作为事件的回调
+			// onClick={this.changeWeather()}: 把 changeWeather 方法的返回值作为事件的回调
+
+			render(){
+			    const {isHot,wind} = this.state
+				return <h2 onClick={this.changeWeather}>天气很 { isHot ? '炎热' : '凉爽'},{wind}</h2>
+			}
+
+			// 自定义方法————要用赋值语句的形式+箭头函数
+			// 箭头函数没有自己的this，会找函数外层的this
+			// changeWeather 放在了实例自身
+			changeWeather = ()=>{	
+				const isHot = this.state.isHot
+				this.setState({isHot:!isHot}) 
+			}
+
+		}
+		//2.渲染组件到页面
+		ReactDOM.render(<Weather/>,document.getElementById('test'))
+
+	</script>
+
+</body>
+</html>
